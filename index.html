@@ -6,241 +6,28 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>RIKYULOU87 | TOKYO EST. 2026</title>
     <style>
-        /* 1. 基础重置 */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            background-color: #000; /* 无图时的背景色 */
-            color: #fff;
-            overflow: hidden; /* 禁止主页滚动，营造沉浸感 */
-        }
-
-        /* 2. 全屏背景图 - 核心所在 */
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* TODO: 将下方链接替换为您自己拍的高清机械表或东京夜景图片 */
-            background-image: url('https://images.unsplash.com/photo-1540331547168-8b63109225b7?q=80&w=2560&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: brightness(0.7); /* 调暗背景，突出文字 */
-            z-index: -1;
-        }
-
-        /* 3. 极简导航栏 */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3); /* 半透明背景 */
-            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
-            box-sizing: border-box;
-            z-index: 100;
-        }
-        .logo {
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #fff;
-            text-decoration: none;
-        }
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: #fff;
-        }
-
-        /* 4. 主体内容 - 居中且极简 */
-        .main-content {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-        }
-        .main-title {
-            font-size: 4rem; /* 巨大的标题 */
-            font-weight: 100; /* 极细的字体，更有高级感 */
-            letter-spacing: 15px; /* 巨大的字间距 */
-            text-transform: uppercase; /* 全大写 */
-            margin: 0;
-            opacity: 0;
-            animation: fadeInLetter 1s forwards 0.5s;
-        }
-        .main-subtitle {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 3px;
-            margin-top: 20px;
-            margin-bottom: 50px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 1s;
-        }
-
-        /* 5. 高端按钮 - 带有动画效果 */
-        .cta-button {
-            display: inline-block;
-            padding: 15px 40px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            opacity: 0;
-            animation: fadeIn 1s forwards 1.5s;
-        }
-        .cta-button:hover {
-            background-color: #fff;
-            color: #000;
-            border-color: #fff;
-        }
-
-        /* 6. 简单的淡入动画 */
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        @keyframes fadeInLetter {
-            from {
-                letter-spacing: 30px;
-                opacity: 0;
-            }
-            to {
-                letter-spacing: 15px;
-                opacity: 1;
-            }
-        }
-
-        /* 7. 响应式适配 */
-        @media (max-width: 768px) {
-            .main-title { font-size: 2.5rem; letter-spacing: 8px; }
-            .header { padding: 20px; }
-            .nav-links { display: none; } /* 手机端隐藏导航，保持极简 */
-        }
-        /* 弹窗背景（遮罩层） */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    display: none; /* 默认隐藏 */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(15px);
-}
-
-/* 弹窗内容卡片 */
-.modal-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-}
-
-.qr-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.qr-item {
-    flex: 1;
-}
-
-.qr-item img {
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.qr-label {
-    margin-top: 10px;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.close-btn {
-    position: absolute;
-    top: 20px; right: 20px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
-}
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Helvetica Neue', Arial, sans-serif; background: #000; color: #fff; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                   background-image: url('https://images.unsplash.com/photo-1540331547168-8b63109225b7?q=80&w=2560&auto=format&fit=crop'); 
+                   background-size: cover; background-position: center; filter: brightness(0.6); z-index: -1; }
+        .header { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; box-sizing: border-box; backdrop-filter: blur(10px); }
+        .logo { font-weight: bold; letter-spacing: 2px; text-decoration: none; color: #fff; }
+        .main { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .title { font-size: 4rem; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin: 0; animation: fadeIn 1.5s ease; }
+        .cta-btn { margin-top: 40px; padding: 15px 45px; border: 1px solid #fff; color: #fff; text-decoration: none; letter-spacing: 2px; transition: 0.3s; }
+        .cta-btn:hover { background: #fff; color: #000; }
+        @keyframes fadeIn { from { opacity: 0; letter-spacing: 30px; } to { opacity: 1; letter-spacing: 15px; } }
     </style>
 </head>
 <body>
-
-    <div class="hero-background"></div>
-
+    <div class="hero-bg"></div>
     <header class="header">
-        <a href="#" class="logo">RIKYULOU87</a>
-        <div class="nav-links">
-            <a href="#">HARDWARE</a>
-            <a href="#">SEMICONDUCTOR</a>
-            <a href="#">COLLECTION</a>
-        </div>
+        <a href="index.html" class="logo">RIKYULOU87</a>
     </header>
-
-    <div class="main-content">
-        <h1 class="main-title">RIKYULOU</h1>
-        <p class="main-subtitle">HARDWARE ENGINEER / TOKYO</p>
-        <a href="mailto:your-email@example.com" class="cta-button">咨询服务</a>
+    <div class="main">
+        <h1 class="title">RIKYULOU</h1>
+        <p style="letter-spacing: 4px; color: rgba(255,255,255,0.7);">HARDWARE ENGINEER / TOKYO</p>
+        <a href="services.html" class="cta-btn">咨询服务 / SERVICES</a>
     </div>
-
 </body>
-    <a href="javascript:void(0)" class="cta-button" onclick="openModal()">咨询服务</a>
-
-<div id="contactModal" class="modal-overlay" onclick="closeModal()">
-    <div class="modal-card" onclick="event.stopPropagation()">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2 style="font-weight: 100; letter-spacing: 5px;">CONTACT</h2>
-        <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">扫描二维码开启咨询</p>
-        
-        <div class="qr-container">
-            <div class="qr-item">
-                <img src="https://via.placeholder.com/200?text=WECHAT" alt="WeChat">
-                <div class="qr-label">WECHAT</div>
-            </div>
-            <div class="qr-item">
-                <img src="https://via.placeholder.com/200?text=INSTAGRAM" alt="Instagram">
-                <div class="qr-label">INSTAGRAM</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function openModal() {
-        document.getElementById('contactModal').style.display = 'flex';
-    }
-    function closeModal() {
-        document.getElementById('contactModal').style.display = 'none';
-    }
-</script>
 </html>

@@ -4,108 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>Rikyulou87 | Hardware & Tech</title>
+    <title>RIKYULOU87 | TOKYO EST. 2026</title>
     <style>
-        :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --accent: #38bdf8;
-            --secondary: #94a3b8;
-        }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            line-height: 1.6; 
-            margin: 0; 
-            padding: 20px;
-        }
-        .container { max-width: 800px; margin: 0 auto; }
-        
-        /* 头部设计 */
-        header { 
-            padding: 40px 0; 
-            border-bottom: 1px solid var(--card);
-            text-align: center;
-        }
-        h1 { font-size: 2rem; color: var(--accent); margin: 0; }
-        .subtitle { color: var(--secondary); font-size: 1rem; }
-
-        /* 卡片布局 */
-        .section { 
-            background: var(--card); 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin-top: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        h2 { font-size: 1.25rem; color: var(--accent); margin-top: 0; }
-        
-        /* 标签样式 */
-        .tag {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin: 5px 5px 5px 0;
+        /* 1. 基础重置 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #000; /* 无图时的背景色 */
+            color: #fff;
+            overflow: hidden; /* 禁止主页滚动，营造沉浸感 */
         }
 
-        /* 链接按钮 */
-        .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
+        /* 2. 全屏背景图 - 核心所在 */
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* TODO: 将下方链接替换为您自己拍的高清机械表或东京夜景图片 */
+            background-image: url('https://images.unsplash.com/photo-1540331547168-8b63109225b7?q=80&w=2560&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.7); /* 调暗背景，突出文字 */
+            z-index: -1;
+        }
+
+        /* 3. 极简导航栏 */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3); /* 半透明背景 */
+            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+            box-sizing: border-box;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 1.2rem;
             font-weight: bold;
-            margin-top: 15px;
-            transition: opacity 0.2s;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
         }
-        .btn:hover { opacity: 0.9; }
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
 
-        footer { text-align: center; color: var(--secondary); font-size: 0.8rem; margin-top: 50px; }
+        /* 4. 主体内容 - 居中且极简 */
+        .main-content {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .main-title {
+            font-size: 4rem; /* 巨大的标题 */
+            font-weight: 100; /* 极细的字体，更有高级感 */
+            letter-spacing: 15px; /* 巨大的字间距 */
+            text-transform: uppercase; /* 全大写 */
+            margin: 0;
+            opacity: 0;
+            animation: fadeInLetter 1s forwards 0.5s;
+        }
+        .main-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 3px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        /* 5. 高端按钮 - 带有动画效果 */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1.5s;
+        }
+        .cta-button:hover {
+            background-color: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 6. 简单的淡入动画 */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @keyframes fadeInLetter {
+            from {
+                letter-spacing: 30px;
+                opacity: 0;
+            }
+            to {
+                letter-spacing: 15px;
+                opacity: 1;
+            }
+        }
+
+        /* 7. 响应式适配 */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; letter-spacing: 8px; }
+            .header { padding: 20px; }
+            .nav-links { display: none; } /* 手机端隐藏导航，保持极简 */
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>RIKYULOU87</h1>
-        <p class="subtitle">硬件设计工程师 · 东京 · 科技探索者</p>
+    <div class="hero-background"></div>
+
+    <header class="header">
+        <a href="#" class="logo">RIKYULOU87</a>
+        <div class="nav-links">
+            <a href="#">HARDWARE</a>
+            <a href="#">SEMICONDUCTOR</a>
+            <a href="#">COLLECTION</a>
+        </div>
     </header>
 
-    <div class="section">
-        <h2>关于我 / About</h2>
-        <p>目前居住于日本东京，专注于硬件设计与电子制造。 同时在深入研究<b>钙钛矿/CIGS 叠层太阳能电池</b>，准备攻读博士学位。</p>
-        <div>
-            <span class="tag"># 985 院校背景</span>
-            <span class="tag"># 电信工程</span>
-            <span class="tag"># 日本 PhD 申请中</span>
-        </div>
+    <div class="main-content">
+        <h1 class="main-title">RIKYULOU</h1>
+        <p class="main-subtitle">HARDWARE ENGINEER / TOKYO</p>
+        <a href="mailto:your-email@example.com" class="cta-button">咨询服务</a>
     </div>
-
-    <div class="section">
-        <h2>核心项目 / Projects</h2>
-        <p><b>🔬 半导体研究：</b> 叠层电池效率优化方案</p>
-        <p><b>⌚ 精选采购：</b> 为同好寻找日本限定机械表与经典男装</p>
-        <p><b>🖼️ 东京游志：</b> 记录国立西洋美术馆、Artizon 博物馆的艺术之旅</p>
-    </div>
-
-    <div class="section">
-        <h2>联系咨询 / Contact</h2>
-        <p>如果您对我的研究内容感兴趣，或有日本代购/商务咨询需求，欢迎联系。</p>
-        <a href="mailto:your-email@example.com" class="btn">发送邮件</a>
-        <a href="#" class="btn" style="background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-left: 10px;">微信咨询</a>
-    </div>
-
-    <footer>
-        <p>© 2026 Rikyulou87 | 系统运行正常 ●</p>
-    </footer>
-</div>
 
 </body>
 </html>

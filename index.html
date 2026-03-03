@@ -1,27 +1,111 @@
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<div class="container">
-    <section class="card">
-        <h2>精选服务 / Selected Services</h2>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 250px; border: 1px solid #eee; padding: 15px; border-radius: 8px;">
-                <div style="background: #eee; height: 150px; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
-                    [商品图片预留]
-                </div>
-                <h3>日本限定机械表代订</h3>
-                <p>专注 Square-faced 或 Visible movements 表款。</p>
-                <button onclick="alert('微信联系：YourID')" style="width: 100%; padding: 10px; background: #2d3436; color: white; border: none; cursor: pointer;">立即咨询</button>
-            </div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Rikyulou87 | Hardware & Tech</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --accent: #38bdf8;
+            --secondary: #94a3b8;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        /* 头部设计 */
+        header { 
+            padding: 40px 0; 
+            border-bottom: 1px solid var(--card);
+            text-align: center;
+        }
+        h1 { font-size: 2rem; color: var(--accent); margin: 0; }
+        .subtitle { color: var(--secondary); font-size: 1rem; }
 
-            <div style="flex: 1; min-width: 250px; border: 1px solid #eee; padding: 15px; border-radius: 8px;">
-                <div style="background: #eee; height: 150px; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
-                    [服务图片预留]
-                </div>
-                <h3>硬件方案咨询</h3>
-                <p>提供电路设计及 PCB 布局建议。</p>
-                <button onclick="alert('邮件联系：YourEmail')" style="width: 100%; padding: 10px; background: #0984e3; color: white; border: none; cursor: pointer;">获取报价</button>
-            </div>
+        /* 卡片布局 */
+        .section { 
+            background: var(--card); 
+            padding: 25px; 
+            border-radius: 12px; 
+            margin-top: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h2 { font-size: 1.25rem; color: var(--accent); margin-top: 0; }
+        
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 5px 5px 5px 0;
+        }
+
+        /* 链接按钮 */
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        footer { text-align: center; color: var(--secondary); font-size: 0.8rem; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>RIKYULOU87</h1>
+        <p class="subtitle">硬件设计工程师 · 东京 · 科技探索者</p>
+    </header>
+
+    <div class="section">
+        <h2>关于我 / About</h2>
+        <p>目前居住于日本东京，专注于硬件设计与电子制造。 同时在深入研究<b>钙钛矿/CIGS 叠层太阳能电池</b>，准备攻读博士学位。</p>
+        <div>
+            <span class="tag"># 985 院校背景</span>
+            <span class="tag"># 电信工程</span>
+            <span class="tag"># 日本 PhD 申请中</span>
         </div>
-    </section>
+    </div>
+
+    <div class="section">
+        <h2>核心项目 / Projects</h2>
+        <p><b>🔬 半导体研究：</b> 叠层电池效率优化方案</p>
+        <p><b>⌚ 精选采购：</b> 为同好寻找日本限定机械表与经典男装</p>
+        <p><b>🖼️ 东京游志：</b> 记录国立西洋美术馆、Artizon 博物馆的艺术之旅</p>
+    </div>
+
+    <div class="section">
+        <h2>联系咨询 / Contact</h2>
+        <p>如果您对我的研究内容感兴趣，或有日本代购/商务咨询需求，欢迎联系。</p>
+        <a href="mailto:your-email@example.com" class="btn">发送邮件</a>
+        <a href="#" class="btn" style="background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-left: 10px;">微信咨询</a>
+    </div>
+
+    <footer>
+        <p>© 2026 Rikyulou87 | 系统运行正常 ●</p>
+    </footer>
 </div>
+
+</body>
+</html>

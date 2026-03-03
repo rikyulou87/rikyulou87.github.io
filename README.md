@@ -1,2 +1,2 @@
-# rikyulou87.github.io
+#LOU.github.io
 RIKYU`s website

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>SERVICES | RIKYULOU</title>
     <style>
         body { background: #0a0a0a; color: #eee; font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 0; }
@@ -20,9 +21,10 @@
         .contact-footer { margin-top: 100px; padding: 60px 0; border-top: 1px solid #222; text-align: center; }
         .qr-wrapper { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
         .qr-box { width: 180px; }
+        /* 这里的 filter: grayscale(1) 会让二维码默认变成黑白，鼠标放上去才显现颜色，保持高级感 */
         .qr-box img { width: 100%; border-radius: 8px; filter: grayscale(1); transition: 0.3s; }
         .qr-box img:hover { filter: grayscale(0); }
-        .qr-label { margin-top: 15px; font-size: 0.7rem; letter-spacing: 2px; color: #666; }
+        .qr-label { margin-top: 15px; font-size: 0.7rem; letter-spacing: 2px; color: #666; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -33,44 +35,64 @@
         <div class="grid">
             <div class="service-card">
                 <h2>考学咨询 / ACADEMIC</h2>
-                <p>针对日本顶尖理工科院校的考学规划。 包括入学相关咨询，研究计划书指导，课程/语言辅导。</p>
+                <p>针对日本顶尖理工科院校的考学规划。包括入学相关咨询，研究计划书指导，课程/语言辅导。</p>
             </div>
 
             <div class="service-card">
                 <h2>高端采购 / CONCIERGE</h2>
-                <p>日本限定机械表、石英表及商务配件采购。 凭借一流的审美为您把关质感。</p>
+                <p>日本限定机械表、石英表及商务配件采购。凭借一流的审美为您把关质感。</p>
             </div>
 
             <div class="service-card">
                 <h2>技术翻译 / TRANSLATION</h2>
-                <p>中日英技术文档翻译。 涵盖电信、硬件及制造行业专业词汇。</p>
+                <p>中日英技术文档翻译。涵盖电信、硬件及制造行业专业词汇。</p>
             </div>
 
             <div class="service-card">
-                <h2>品牌建站定制 / WEB DEVELOPMENT</h2>
-                <p>提供极简、高级的个人独立站及品牌官网搭建服务。从视觉设计到代码实现，为您打造独一无二的专属数字名片。</p>
+                <h2>艺术与演艺建站 / DIGITAL PORTFOLIO</h2>
+                <p>专为艺术创作者、独立艺术家及演艺经纪机构提供高端定制建站服务。以极简的电影感视觉与精密的底层代码，打造极具审美张力的专属数字作品集与品牌官网。</p>
             </div>
 
             <div class="service-card">
                 <h2>在日就职咨询 / CAREER ADVISORY</h2>
                 <p>针对日本高端制造、半导体及 IT 行业的求职指导。涵盖企业分析、简历精修、面试对策及长远的高价值职业路径规划。</p>
             </div>
-            </div>
+        </div>
 
         <div class="contact-footer">
             <h3 style="font-weight: 200; letter-spacing: 3px;">GET IN TOUCH</h3>
             <div class="qr-wrapper">
                 <div class="qr-box">
-                    <img src="YOUR_WECHAT_QR_URL" alt="wechat.jpg">
-                    <div class="qr-label">wechat</div>
+                    <img src="wechat.jpg" alt="WeChat">
+                    <div class="qr-label">WECHAT</div>
                 </div>
                 <div class="qr-box">
-                    <img src="YOUR_INS_QR_URL" alt="ig.jpg">
-                    <div class="qr-label">ig</div>
+                    <img src="ig.jpg" alt="Instagram">
+                    <div class="qr-label">INSTAGRAM</div>
                 </div>
             </div>
             <p style="margin-top: 40px; font-size: 0.8rem; color: #444;">© 2026 RIKYULOU</p>
         </div>
     </div>
+
+    <script>
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        
+        // 禁用 F12 和相关的开发者快捷键
+        document.addEventListener('keydown', function(e) {
+            if(e.keyCode == 123) { e.preventDefault(); } // F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 73) { e.preventDefault(); } // Ctrl+Shift+I
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 67) { e.preventDefault(); } // Ctrl+Shift+C
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 74) { e.preventDefault(); } // Ctrl+Shift+J
+            if(e.ctrlKey && e.keyCode == 85) { e.preventDefault(); } // Ctrl+U (查看源代码)
+        });
+        
+        // 禁用文字选中，防止直接拖拽复制内容
+        document.addEventListener('selectstart', function(e) { e.preventDefault(); });
+        
+        // 禁用拖拽图片，防止别人直接把你的二维码或者背景图拖到桌面上
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    </script>
 </body>
 </html>

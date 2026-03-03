@@ -10,7 +10,7 @@
         .container { max-width: 900px; margin: 0 auto; padding: 100px 20px; }
         h1 { font-weight: 100; letter-spacing: 8px; text-align: center; margin-bottom: 60px; }
         
-        /* 业务模块网格 */
+        /* 业务模块网格：现在是完美的 6 宫格 */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .service-card { background: #151515; border: 1px solid #222; padding: 30px; border-radius: 4px; transition: 0.3s; }
         .service-card:hover { border-color: #fff; transform: translateY(-5px); }
@@ -21,7 +21,6 @@
         .contact-footer { margin-top: 100px; padding: 60px 0; border-top: 1px solid #222; text-align: center; }
         .qr-wrapper { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
         .qr-box { width: 180px; }
-        /* 这里的 filter: grayscale(1) 会让二维码默认变成黑白，鼠标放上去才显现颜色，保持高级感 */
         .qr-box img { width: 100%; border-radius: 8px; filter: grayscale(1); transition: 0.3s; }
         .qr-box img:hover { filter: grayscale(0); }
         .qr-label { margin-top: 15px; font-size: 0.7rem; letter-spacing: 2px; color: #666; text-transform: uppercase; }
@@ -55,7 +54,12 @@
 
             <div class="service-card">
                 <h2>在日就职咨询 / CAREER ADVISORY</h2>
-                <p>针对日本高端制造、半导体及 IT 行业的求职指导。涵盖企业分析、简历精修、AI面试对策及长远的高价值职业路径规划。</p>
+                <p>针对日本高端制造、半导体及 IT 行业的求职指导。涵盖企业分析、简历精修、面试对策及长远的高价值职业路径规划。</p>
+            </div>
+
+            <div class="service-card">
+                <h2>私人伴游与影像 / BESPOKE TRAVEL</h2>
+                <p>提供东京及周边地区的高端私人定制行程与专业跟拍服务。以独特的艺术视角规划专属路线（涵盖先锋美术馆、小众建筑与隐秘名店），并为您定格极具电影质感的旅途影像。</p>
             </div>
         </div>
 
@@ -67,7 +71,7 @@
                     <div class="qr-label">WECHAT</div>
                 </div>
                 <div class="qr-box">
-                    <img src="ig.jpg" alt="Instagram">
+                    <img src="iz.jpg" alt="Instagram">
                     <div class="qr-label">INSTAGRAM</div>
                 </div>
             </div>
@@ -76,22 +80,13 @@
     </div>
 
     <script>
-        // 禁用右键菜单
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-        
-        // 禁用 F12 和相关的开发者快捷键
         document.addEventListener('keydown', function(e) {
             if(e.keyCode == 123) { e.preventDefault(); } // F12
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 73) { e.preventDefault(); } // Ctrl+Shift+I
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 67) { e.preventDefault(); } // Ctrl+Shift+C
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 74) { e.preventDefault(); } // Ctrl+Shift+J
-            if(e.ctrlKey && e.keyCode == 85) { e.preventDefault(); } // Ctrl+U (查看源代码)
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) { e.preventDefault(); }
+            if(e.ctrlKey && e.keyCode == 85) { e.preventDefault(); } // 查看源代码
         });
-        
-        // 禁用文字选中，防止直接拖拽复制内容
         document.addEventListener('selectstart', function(e) { e.preventDefault(); });
-        
-        // 禁用拖拽图片，防止别人直接把你的二维码或者背景图拖到桌面上
         document.addEventListener('dragstart', function(e) { e.preventDefault(); });
     </script>
 </body>

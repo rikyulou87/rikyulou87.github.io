@@ -6,29 +6,61 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>SERVICES | RIKYULOU</title>
     <style>
-        body { background: #0a0a0a; color: #eee; font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 0; }
-        .container { max-width: 900px; margin: 0 auto; padding: 100px 20px; }
-        h1 { font-weight: 100; letter-spacing: 8px; text-align: center; margin-bottom: 60px; }
+        body { background: #0a0a0a; color: #eee; font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 100px 20px; }
         
-        /* 业务模块网格：现在是完美的 6 宫格 */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .service-card { background: #151515; border: 1px solid #222; padding: 30px; border-radius: 4px; transition: 0.3s; }
-        .service-card:hover { border-color: #fff; transform: translateY(-5px); }
-        .service-card h2 { font-weight: 300; font-size: 1.2rem; color: #fff; border-bottom: 1px solid #333; padding-bottom: 15px; }
-        .service-card p { color: #888; font-size: 0.9rem; line-height: 1.8; }
+        /* 标题入场动画 */
+        h1 { font-weight: 100; letter-spacing: 12px; text-align: center; margin-bottom: 80px; opacity: 0; transform: translateY(-20px); animation: fadeDown 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards 0.3s; text-transform: uppercase; }
+        .back-link { display: inline-block; color: #666; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 20px; opacity: 0; animation: fadeRight 1s ease forwards 0.8s; transition: color 0.3s; }
+        .back-link:hover { color: #fff; }
 
-        /* 底部二维码区域 */
-        .contact-footer { margin-top: 100px; padding: 60px 0; border-top: 1px solid #222; text-align: center; }
-        .qr-wrapper { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
-        .qr-box { width: 180px; }
-        .qr-box img { width: 100%; border-radius: 8px; filter: grayscale(1); transition: 0.3s; }
-        .qr-box img:hover { filter: grayscale(0); }
-        .qr-label { margin-top: 15px; font-size: 0.7rem; letter-spacing: 2px; color: #666; text-transform: uppercase; }
+        /* 业务模块网格 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        
+        /* 卡片基础状态：隐藏、下沉（为滚动浮现做准备） */
+        .service-card { 
+            background: #111; 
+            border: 1px solid #1a1a1a; 
+            padding: 40px 30px; 
+            border-radius: 8px; 
+            opacity: 0; 
+            transform: translateY(50px); 
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 配合 JS 的可见状态 */
+        .service-card.show { opacity: 1; transform: translateY(0); }
+        
+        /* 悬停时的“磁悬浮”效果 */
+        .service-card:hover { 
+            border-color: rgba(255, 255, 255, 0.4); 
+            transform: translateY(-10px) scale(1.02); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.03); 
+        }
+        
+        .service-card h2 { font-weight: 300; font-size: 1.1rem; color: #fff; border-bottom: 1px solid #333; padding-bottom: 15px; letter-spacing: 2px; }
+        .service-card p { color: #777; font-size: 0.9rem; line-height: 1.8; font-weight: 300; }
+
+        /* 底部二维码区域同样加入滚动浮现 */
+        .contact-footer { margin-top: 120px; padding: 80px 0 40px; border-top: 1px solid #222; text-align: center; opacity: 0; transform: translateY(30px); transition: all 1s ease; }
+        .contact-footer.show { opacity: 1; transform: translateY(0); }
+        
+        .qr-wrapper { display: flex; justify-content: center; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
+        .qr-box { width: 160px; }
+        .qr-box img { width: 100%; border-radius: 8px; filter: grayscale(1) brightness(0.8); transition: all 0.5s ease; }
+        .qr-box img:hover { filter: grayscale(0) brightness(1); transform: scale(1.05); }
+        .qr-label { margin-top: 15px; font-size: 0.7rem; letter-spacing: 3px; color: #555; text-transform: uppercase; }
+
+        /* 关键帧动画 */
+        @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeRight { to { opacity: 1; transform: translateX(0); } }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 0.8rem;">← 返回首页</a>
+        <a href="index.html" class="back-link">← RETURN / 返回</a>
         <h1>咨询与服务</h1>
 
         <div class="grid">
@@ -48,8 +80,8 @@
             </div>
 
             <div class="service-card">
-                <h2>艺术与演艺建站 / DIGITAL PORTFOLIO</h2>
-                <p>专为艺术创作者、独立艺术家及演艺经纪机构提供高端定制建站服务。以极简的电影感视觉与精密的底层代码，打造极具审美张力的专属数字作品集与品牌官网。</p>
+                <h2>个人网站搭建 / DIGITAL PORTFOLIO</h2>
+                <p>专为艺术创作者、独立艺术家及机构提供高端定制建站服务。以极简的电影感视觉与精密的底层代码，打造极具审美张力的专属数字作品集与品牌官网。</p>
             </div>
 
             <div class="service-card">
@@ -64,27 +96,59 @@
         </div>
 
         <div class="contact-footer">
-            <h3 style="font-weight: 200; letter-spacing: 3px;">GET IN TOUCH</h3>
+            <h3 style="font-weight: 200; letter-spacing: 4px; color: #fff;">GET IN TOUCH</h3>
             <div class="qr-wrapper">
                 <div class="qr-box">
                     <img src="wechat.jpg" alt="WeChat">
                     <div class="qr-label">WECHAT</div>
                 </div>
                 <div class="qr-box">
-                    <img src="iz.jpg" alt="Instagram">
+                    <img src="ig.jpg" alt="Instagram">
                     <div class="qr-label">INSTAGRAM</div>
                 </div>
             </div>
-            <p style="margin-top: 40px; font-size: 0.8rem; color: #444;">© 2026 RIKYULOU</p>
+            <p style="margin-top: 50px; font-size: 0.75rem; color: #333; letter-spacing: 1px;">© 2026 RIKYULOU STUDIO. ALL RIGHTS RESERVED.</p>
         </div>
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 获取所有需要浮现的元素
+            const cards = document.querySelectorAll('.service-card');
+            const footer = document.querySelector('.contact-footer');
+
+            // 设定观察器规则
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // 元素露出 15% 时触发动画
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // 利用 setTimeout 制造卡片依次出现的错落感（瀑布流动画）
+                        setTimeout(() => {
+                            entry.target.classList.add('show');
+                        }, index * 150); // 每张卡片延迟 0.15 秒出现
+                        
+                        observer.unobserve(entry.target); // 动画执行一次后取消观察，避免重复触发
+                    }
+                });
+            }, observerOptions);
+
+            // 开始观察卡片和底部
+            cards.forEach(card => observer.observe(card));
+            observer.observe(footer);
+        });
+    </script>
+
+    <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
-            if(e.keyCode == 123) { e.preventDefault(); } // F12
+            if(e.keyCode == 123) { e.preventDefault(); }
             if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) { e.preventDefault(); }
-            if(e.ctrlKey && e.keyCode == 85) { e.preventDefault(); } // 查看源代码
+            if(e.ctrlKey && e.keyCode == 85) { e.preventDefault(); }
         });
         document.addEventListener('selectstart', function(e) { e.preventDefault(); });
         document.addEventListener('dragstart', function(e) { e.preventDefault(); });

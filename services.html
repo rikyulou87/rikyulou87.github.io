@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICES | RIKYULOU87</title>
+    <style>
+        body { background: #0a0a0a; color: #eee; font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 100px 20px; }
+        h1 { font-weight: 100; letter-spacing: 8px; text-align: center; margin-bottom: 60px; }
+        
+        /* 业务模块网格 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: #151515; border: 1px solid #222; padding: 30px; border-radius: 4px; transition: 0.3s; }
+        .service-card:hover { border-color: #fff; transform: translateY(-5px); }
+        .service-card h2 { font-weight: 300; font-size: 1.2rem; color: #fff; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .service-card p { color: #888; font-size: 0.9rem; line-height: 1.8; }
 
+        /* 底部二维码区域 */
+        .contact-footer { margin-top: 100px; padding: 60px 0; border-top: 1px solid #222; text-align: center; }
+        .qr-wrapper { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+        .qr-box { width: 180px; }
+        .qr-box img { width: 100%; border-radius: 8px; filter: grayscale(1); transition: 0.3s; }
+        .qr-box img:hover { filter: grayscale(0); }
+        .qr-label { margin-top: 15px; font-size: 0.7rem; letter-spacing: 2px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 0.8rem;">← 返回首页</a>
+        <h1>咨询与服务</h1>
+
+        <div class="grid">
+            <div class="service-card">
+                <h2>考学咨询 / ACADEMIC</h2>
+                <p>针对日本顶尖理工科院校（早大、东工大等）的考学规划。 包括半导体方向研究计划书指导。</p>
+            </div>
+
+            <div class="service-card">
+                <h2>高端采购 / CONCIERGE</h2>
+                <p>日本限定机械表、方表及商务配件采购。 凭借硬件工程师的审美为您把关质感。</p>
+            </div>
+
+            <div class="service-card">
+                <h2>技术翻译 / TRANSLATION</h2>
+                <p>中日技术文档翻译。 涵盖电信、硬件及制造行业专业词汇。</p>
+            </div>
+
+            </div>
+
+        <div class="contact-footer">
+            <h3 style="font-weight: 200; letter-spacing: 3px;">GET IN TOUCH</h3>
+            <div class="qr-wrapper">
+                <div class="qr-box">
+                    <img src="YOUR_WECHAT_QR_URL" alt="WeChat">
+                    <div class="qr-label">WECHAT</div>
+                </div>
+                <div class="qr-box">
+                    <img src="YOUR_INS_QR_URL" alt="Instagram">
+                    <div class="qr-label">INSTAGRAM</div>
+                </div>
+            </div>
+            <p style="margin-top: 40px; font-size: 0.8rem; color: #444;">© 2026 RIKYULOU87</p>
+        </div>
+    </div>
+</body>
+</html>

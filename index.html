@@ -8,73 +8,73 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; font-family: 'Helvetica Neue', Arial, sans-serif; background: #000; color: #fff; overflow: hidden; }
         
-        /* 1. 背景加入缓慢缩放的“呼吸感” */
+        /* 1. 背景层：层级置于最底 (-2) */
         .hero-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background-image: url('https://images.unsplash.com/photo-1540331547168-8b63109225b7?q=80&w=2560&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; filter: brightness(0.6); z-index: -1; 
-            /* 初始状态稍微放大 */
+            background-size: cover; background-position: center; filter: brightness(0.4); z-index: -2; 
             transform: scale(1.08);
-            /* 持续10秒的平滑缩小动画 */
-            animation: bgBreath 10s ease-out forwards;
+            animation: bgBreath 15s ease-out forwards;
+        }
+
+        /* 2. 粒子画布层：层级介于背景和内容之间 (-1) */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none; /* 确保不影响中间按钮的点击 */
         }
         
-        .header { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; box-sizing: border-box; backdrop-filter: blur(10px); z-index: 100;}
+        .header { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; box-sizing: border-box; backdrop-filter: blur(5px); z-index: 100;}
         
-        /* LOGO 简单的淡入 */
         .logo { font-weight: bold; letter-spacing: 2px; text-decoration: none; color: #fff; opacity: 0; animation: simpleFadeIn 1s ease forwards 0.2s;}
         
         .main { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; z-index: 10;}
         
-        /* 2. 主标题：镜头失焦到聚焦的电影级入场 */
         .title { 
             font-size: 4rem; font-weight: 100; text-transform: uppercase; margin: 0; 
             opacity: 0; 
-            /* 核心动画：cubic-bezier 提供丝滑的减速感 */
-            animation: cinematicTitle 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards 0.3s; 
+            animation: cinematicTitle 1.8s cubic-bezier(0.2, 1, 0.3, 1) forwards 0.3s; 
         }
         
-        /* 副标题：我帮你把行内样式提出来了，方便做延时动画 */
         .subtitle { 
             color: rgba(255,255,255,0.7); 
             opacity: 0; 
-            animation: cinematicSubtitle 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards 0.8s; 
+            animation: cinematicSubtitle 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards 0.8s; 
         }
 
-        /* 3. 按钮：从下方优雅上浮 */
         .cta-btn { 
-            margin-top: 40px; padding: 15px 45px; border: 1px solid #fff; color: #fff; text-decoration: none; letter-spacing: 2px; transition: 0.3s; 
+            margin-top: 40px; padding: 15px 45px; border: 1px solid rgba(255,255,255,0.3); color: #fff; text-decoration: none; letter-spacing: 2px; transition: 0.4s; 
             opacity: 0; 
             animation: fadeUp 1s cubic-bezier(0.2, 1, 0.3, 1) forwards 1.2s;
         }
-        .cta-btn:hover { background: #fff; color: #000; }
+        .cta-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
         /* ================= 动画库 ================= */
-        @keyframes bgBreath {
-            100% { transform: scale(1); }
-        }
+        @keyframes bgBreath { 100% { transform: scale(1); filter: brightness(0.5); } }
         @keyframes cinematicTitle { 
-            0% { opacity: 0; filter: blur(12px); letter-spacing: 30px; transform: translateY(20px); } 
+            0% { opacity: 0; filter: blur(15px); letter-spacing: 40px; transform: translateY(20px); } 
             100% { opacity: 1; filter: blur(0); letter-spacing: 15px; transform: translateY(0); } 
         }
         @keyframes cinematicSubtitle { 
-            0% { opacity: 0; filter: blur(8px); letter-spacing: 8px; transform: translateY(15px); } 
+            0% { opacity: 0; filter: blur(10px); letter-spacing: 12px; transform: translateY(15px); } 
             100% { opacity: 1; filter: blur(0); letter-spacing: 4px; transform: translateY(0); } 
         }
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes simpleFadeIn {
-            100% { opacity: 1; }
-        }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes simpleFadeIn { 100% { opacity: 1; } }
     </style>
 </head>
 <body>
     <div class="hero-bg"></div>
+    <canvas id="particle-canvas"></canvas>
+
     <header class="header">
         <a href="index.html" class="logo">RIKYULOU</a>
     </header>
+
     <div class="main">
         <h1 class="title">RIKYU LOU</h1>
         <p class="subtitle">BESPOKE SERVICES & CONSULTING / TOKYO</p>
@@ -82,14 +82,107 @@
     </div>
 
     <script>
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-        document.addEventListener('keydown', function(e) {
-            if(e.keyCode == 123) { e.preventDefault(); } // F12
-            if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) { e.preventDefault(); } // 开发者工具
-            if(e.ctrlKey && e.keyCode == 85) { e.preventDefault(); } // 查看源代码
+        // 1. 粒子系统核心脚本
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 80; // 数量适中保持高冷感
+        let mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
         });
-        document.addEventListener('selectstart', function(e) { e.preventDefault(); }); // 禁复制
-        document.addEventListener('dragstart', function(e) { e.preventDefault(); }); // 禁拖拽
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            init();
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // 边界回弹
+                if (this.x > window.innerWidth || this.x < 0) this.speedX *= -1;
+                if (this.y > window.innerHeight || this.y < 0) this.speedY *= -1;
+
+                // 鼠标交互磁场效果
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    this.x -= dx / 20;
+                    this.y -= dy / 20;
+                }
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // 绘制精密线条 (连线逻辑)
+                for (let j = i; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance/1000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        // 2. 现有的保护脚本
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('selectstart', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
     </script>
 </body>
 </html>

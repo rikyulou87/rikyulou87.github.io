@@ -5,42 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACADEMIC | RIKYULOU</title>
     <style>
-        body { background: #000; color: #eee; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-        .nav-header { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; z-index: 1000; }
-        .nav-logo { font-weight: bold; letter-spacing: 4px; text-decoration: none; color: #fff; font-size: 0.9rem; }
-        .container { max-width: 800px; margin: 0 auto; padding: 150px 20px 100px; }
-        .back-link { display: inline-block; color: #555; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 40px; transition: 0.3s; }
-        .back-link:hover { color: #fff; }
-        h1 { font-weight: 100; letter-spacing: 8px; font-size: 2.2rem; margin-bottom: 40px; color: #fff; line-height: 1.5; }
-        .content { line-height: 2; color: #999; font-size: 0.95rem; letter-spacing: 1px; }
-        .content b { color: #fff; font-weight: 400; }
-        .footer { margin-top: 100px; padding-top: 60px; border-top: 1px solid #222; text-align: center; }
-        .qr-group { display: flex; justify-content: center; gap: 40px; margin-top: 30px; }
-        .qr-box { width: 120px; text-align: center; }
-        .qr-box img { width: 100%; border-radius: 4px; filter: grayscale(1); transition: 0.5s; }
-        .qr-box img:hover { filter: grayscale(0); }
-        .qr-label { margin-top: 10px; font-size: 0.6rem; color: #444; letter-spacing: 2px; }
+        /* 1. 全局极致黑基调 */
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 2. RM 风格顶部导航 */
+        .rm-header { 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            padding: 40px 60px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+        .rm-logo { 
+            font-weight: 900; 
+            letter-spacing: 6px; 
+            text-decoration: none; 
+            color: #fff; 
+            font-size: 0.85rem; 
+            text-transform: uppercase;
+        }
+
+        /* 3. 页面内容布局 */
+        .container { max-width: 1200px; margin: 0 auto; padding: 180px 60px 100px; }
+
+        /* 返回链接 - 模仿 RM 的侧边按钮感 */
+        .back-nav { 
+            display: flex;
+            align-items: center;
+            color: #444; 
+            text-decoration: none; 
+            font-size: 0.7rem; 
+            letter-spacing: 3px; 
+            margin-bottom: 60px; 
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+        .back-nav:hover { color: #fff; transform: translateX(-10px); }
+        .back-nav::before { content: ''; width: 20px; height: 1px; background: currentColor; margin-right: 15px; }
+
+        /* 标题设计：模仿 RM 的不对称美学 */
+        .main-title { 
+            font-weight: 100; 
+            font-size: 3.5rem; 
+            letter-spacing: 15px; 
+            margin: 0 0 80px 0; 
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        .main-title span { display: block; font-size: 1rem; color: #333; letter-spacing: 5px; margin-top: 20px; }
+
+        /* 内容板块：精密工业排版 */
+        .content-block { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 100px;
+            margin-top: 100px;
+            border-top: 1px solid #111;
+            padding-top: 60px;
+        }
+        .content-desc { color: #888; line-height: 2; font-weight: 300; font-size: 0.95rem; }
+        .content-desc b { color: #fff; font-weight: 500; display: block; margin-bottom: 20px; letter-spacing: 2px; }
+
+        /* 4. 底部二维码（RM 极简风格） */
+        .rm-footer { 
+            margin-top: 200px; 
+            padding: 100px 0; 
+            border-top: 1px solid #111; 
+            text-align: center; 
+        }
+        .footer-label { font-size: 0.65rem; letter-spacing: 5px; color: #222; margin-bottom: 50px; }
+        .qr-section { display: flex; justify-content: center; gap: 80px; }
+        .qr-item { width: 130px; }
+        .qr-item img { 
+            width: 100%; 
+            filter: grayscale(1) contrast(1.2); 
+            opacity: 0.4; 
+            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .qr-item:hover img { opacity: 1; filter: grayscale(0); transform: scale(1.05); }
+        .qr-tag { font-size: 0.6rem; color: #444; margin-top: 20px; letter-spacing: 3px; }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2rem; letter-spacing: 8px; }
+            .content-block { grid-template-columns: 1fr; gap: 40px; }
+            .rm-header { padding: 30px; }
+        }
     </style>
 </head>
 <body>
-    <header class="nav-header"><a href="index.html" class="nav-logo">RIKYU LOU</a></header>
+
+    <header class="rm-header">
+        <a href="index.html" class="rm-logo">RIKYU LOU</a>
+    </header>
+
     <div class="container">
-        <a href="services.html" class="back-link">← BACK TO SERVICES</a>
-        <h1>考学咨询<br><span style="font-size: 1rem; color: #444;">ACADEMIC CONSULTING</span></h1>
-        <div class="content">
-            <p>深耕日本顶尖院校<b>理工科考学</b>。我们提供从研究计划书（Research Proposal）构思到教授套磁的全流程指导。</p>
-            <p>依托 985 院校背景与在日科研经验，精准把握新型太阳能电池等前沿领域的学术脉络。协助您完成从零到一的学术跨越。</p>
-        </div>
-        <div class="footer">
-            <div class="qr-group">
-                <div class="qr-box"><img src="wechat.jpg" alt="WeChat"><div class="qr-label">WECHAT</div></div>
-                <div class="qr-box"><img src="ig.jpg" alt="Instagram"><div class="qr-label">INSTAGRAM</div></div>
+        <a href="services.html" class="back-nav">Services / 业务列表</a>
+        
+        <h1 class="main-title">
+            考学咨询
+            <span>ACADEMIC CONSULTING / 01</span>
+        </h1>
+
+        <div class="content-block">
+            <div class="content-desc">
+                <b>精密规划 / PRECISION PLANNING</b>
+                针对日本顶尖理工科院校的考学路径。提供从研究计划书逻辑重构到导师套磁的深度策略，助力每一个学术梦想的精准着陆。
+            </div>
+            <div class="content-desc">
+                <b>服务核心 / CORE EXPERTISE</b>
+                涵盖研究生、修士、博士的全链条咨询。结合 985 院校背景与在日科研实战，不仅是辅导，更是对未来学术潜力的二次开发。
             </div>
         </div>
+
+        <footer class="rm-footer">
+            <div class="footer-label">CONNECT WITH STUDIO</div>
+            <div class="qr-section">
+                <div class="qr-item">
+                    <img src="wechat.jpg" alt="WeChat">
+                    <div class="qr-tag">WECHAT</div>
+                </div>
+                <div class="qr-item">
+                    <img src="ig.jpg" alt="Instagram">
+                    <div class="qr-tag">INSTAGRAM</div>
+                </div>
+            </div>
+            <p style="color: #111; font-size: 0.6rem; margin-top: 100px; letter-spacing: 2px;">© 2026 RIKYULOU STUDIO. NO COPYING ALLOWED.</p>
+        </footer>
     </div>
-    <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = e => { if(e.keyCode==123 || (e.ctrlKey && e.shiftKey && e.keyCode==73)) return false; };
-    </script>
+
 </body>
 </html>

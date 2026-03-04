@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIC | RIKYULOU</title>
+    <style>
+        body { background: #000; color: #eee; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+        .nav-header { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; z-index: 1000; }
+        .nav-logo { font-weight: bold; letter-spacing: 4px; text-decoration: none; color: #fff; font-size: 0.9rem; }
+        .container { max-width: 800px; margin: 0 auto; padding: 150px 20px 100px; }
+        .back-link { display: inline-block; color: #555; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 40px; transition: 0.3s; }
+        .back-link:hover { color: #fff; }
+        h1 { font-weight: 100; letter-spacing: 8px; font-size: 2.2rem; margin-bottom: 40px; color: #fff; line-height: 1.5; }
+        .content { line-height: 2; color: #999; font-size: 0.95rem; letter-spacing: 1px; }
+        .content b { color: #fff; font-weight: 400; }
+        .footer { margin-top: 100px; padding-top: 60px; border-top: 1px solid #222; text-align: center; }
+        .qr-group { display: flex; justify-content: center; gap: 40px; margin-top: 30px; }
+        .qr-box { width: 120px; text-align: center; }
+        .qr-box img { width: 100%; border-radius: 4px; filter: grayscale(1); transition: 0.5s; }
+        .qr-box img:hover { filter: grayscale(0); }
+        .qr-label { margin-top: 10px; font-size: 0.6rem; color: #444; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <header class="nav-header"><a href="index.html" class="nav-logo">RIKYU LOU</a></header>
+    <div class="container">
+        <a href="services.html" class="back-link">← BACK TO SERVICES</a>
+        <h1>考学咨询<br><span style="font-size: 1rem; color: #444;">ACADEMIC CONSULTING</span></h1>
+        <div class="content">
+            <p>深耕日本顶尖院校<b>理工科考学</b>。我们提供从研究计划书（Research Proposal）构思到教授套磁的全流程指导。</p>
+            <p>依托 985 院校背景与在日科研经验，精准把握新型太阳能电池等前沿领域的学术脉络。协助您完成从零到一的学术跨越。</p>
+        </div>
+        <div class="footer">
+            <div class="qr-group">
+                <div class="qr-box"><img src="wechat.jpg" alt="WeChat"><div class="qr-label">WECHAT</div></div>
+                <div class="qr-box"><img src="ig.jpg" alt="Instagram"><div class="qr-label">INSTAGRAM</div></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = e => { if(e.keyCode==123 || (e.ctrlKey && e.shiftKey && e.keyCode==73)) return false; };
+    </script>
+</body>
+</html>

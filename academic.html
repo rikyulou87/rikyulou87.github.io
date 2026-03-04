@@ -5,225 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACADEMIC | RIKYULOU</title>
     <style>
-        /* --- 1. 全局极致黑基调 --- */
+        /* --- 1. 全局极致黑基调 & Immersive 基础 --- */
         body { 
             background: #000; 
             color: #fff; 
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
             margin: 0; 
             padding: 0; 
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            /* 确保内容可以滚动，触发 ScrollTrigger */
+            min-height: 300vh; 
         }
 
-        /* --- 2. RM 风格顶部导航 --- */
+        /* --- 2. Fixed 背景画廊 --- */
+        #bg-gallery {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2; /* 放在最底层 */
+            overflow: hidden;
+            background: #000;
+        }
+
+        .bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 铺满且不失真 */
+            filter: brightness(0.2); /* 初始极暗，增加电影感 */
+            opacity: 0; /* 默认隐藏，由 GSAP 控制显隐 */
+            transition: filter 0.8s ease; /* 配合鼠标平滑过渡 */
+        }
+        /* 默认显示第一张图 */
+        .bg-img:first-child { opacity: 1; }
+
+        /* --- 3. 互动 Mask (深度遮罩) --- */
+        #depth-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* 夹在内容和图片之间 */
+            background: rgba(0, 0, 0, 0); /* 初始透明 */
+            pointer-events: none; /* 穿透鼠标事件，不干扰内容选择 */
+        }
+
+        /* --- 4. 浮动内容布局 --- */
         .rm-header { 
-            position: fixed; 
-            top: 0; 
-            width: 100%; 
-            padding: 40px 60px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            z-index: 1000;
-            mix-blend-mode: difference;
+            position: fixed; top: 0; width: 100%; padding: 40px 60px; display: flex; 
+            justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference;
         }
-        .rm-logo { 
-            font-weight: 900; 
-            letter-spacing: 6px; 
-            text-decoration: none; 
-            color: #fff; 
-            font-size: 0.85rem; 
-            text-transform: uppercase;
+        .rm-logo { font-weight: 900; letter-spacing: 6px; text-decoration: none; color: #fff; font-size: 0.85rem; text-transform: uppercase; }
+
+        /* 内容层：层级最高，产生滚动感 */
+        .scroll-content { 
+            position: relative; 
+            z-index: 1; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 150px 20px 200px; /* 增加底部 padding */
         }
 
-        /* --- 3. 页面内容布局 --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 180px 60px 100px; }
+        .container-main { padding: 100px 60px; }
 
-        .back-nav { 
-            display: flex;
-            align-items: center;
-            color: #444; 
-            text-decoration: none; 
-            font-size: 0.7rem; 
-            letter-spacing: 3px; 
-            margin-bottom: 60px; 
-            transition: 0.4s;
-            text-transform: uppercase;
-        }
+        .back-nav { display: flex; align-items: center; color: #444; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 60px; transition: 0.4s; text-transform: uppercase; }
         .back-nav:hover { color: #fff; transform: translateX(-10px); }
         .back-nav::before { content: ''; width: 20px; height: 1px; background: currentColor; margin-right: 15px; }
 
         .main-title { 
-            font-weight: 100; 
-            font-size: 3.5rem; 
-            letter-spacing: 15px; 
-            margin: 0 0 80px 0; 
-            line-height: 1.1;
-            text-transform: uppercase;
-            /* 初始状态为透明，由 GSAP 控制入场 */
-            opacity: 0; 
+            font-weight: 100; font-size: 3.5rem; letter-spacing: 15px; margin: 0 0 100px 0; line-height: 1.1;
+            text-transform: uppercase; opacity: 0; /* 初始隐藏由 GSAP 激活 */
         }
         .main-title span { display: block; font-size: 1rem; color: #333; letter-spacing: 5px; margin-top: 20px; }
 
-        .content-block { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 100px;
-            margin-top: 100px;
-            border-top: 1px solid #111;
-            padding-top: 60px;
-            margin-bottom: 100px;
-        }
-        .content-desc { color: #888; line-height: 2; font-weight: 300; font-size: 0.95rem; opacity: 0; }
-        .content-desc b { color: #fff; font-weight: 500; display: block; margin-bottom: 20px; letter-spacing: 2px; }
+        /* 内容板块：取消背景、边框，实现纯浮动感 */
+        .content-section { margin-bottom: 25vh; opacity: 0; }
+        .content-desc { color: #eee; line-height: 2.2; font-weight: 300; font-size: 1rem; letter-spacing: 1px; }
+        .content-desc b { color: #fff; font-weight: 500; display: block; margin-bottom: 25px; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* --- 4. 非对称图片网格 --- */
-        .evidence-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 30px;
-            margin-top: 80px;
-        }
-
-        .evidence-item {
-            position: relative;
-            opacity: 0; /* 初始隐藏 */
-        }
-        .evidence-item:hover { transform: translateY(-5px); }
-
-        .evidence-item::before {
-            content: attr(data-label);
-            position: absolute;
-            top: -25px;
-            left: 0;
-            font-size: 0.6rem;
-            color: #333;
-            letter-spacing: 2px;
-            font-family: monospace;
-        }
-
-        .evidence-item.large { grid-column: 1 / 9; }
-        .evidence-item.small { grid-column: 9 / 13; margin-top: 60px; }
-        .evidence-item.medium { grid-column: 3 / 10; margin-top: 20px; }
-
-        .image-frame {
-            position: relative;
-            border: 1px solid #1a1a1a;
-            padding: 10px;
-            background: #050505;
-        }
-        .image-frame img {
-            width: 100%;
-            display: block;
-            filter: grayscale(1) contrast(1.1);
-            transition: 0.8s;
-        }
-        .image-frame:hover img { filter: grayscale(0) contrast(1); }
-
-        .corner-mark { position: absolute; width: 10px; height: 10px; border: 1px solid #333; }
-        .top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
-        .bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
-
-        .caption {
-            font-size: 0.6rem;
-            color: #444;
-            margin-top: 15px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* --- 5. 底部设计 --- */
+        /* 标签/证据：不再是卡片排版，而是浮在背景上的精密标注 */
+        .evidence-labels { margin-top: 150px; text-align: right; }
+        .label-item { display: inline-block; margin-left: 50px; color: #444; font-size: 0.6rem; letter-spacing: 2px; font-family: monospace; text-transform: uppercase; opacity: 0; }
+        .label-item:hover { color: #fff; transition: 0.3s; }
+        
         .rm-footer { 
-            margin-top: 150px; 
-            padding: 100px 0 50px; 
-            border-top: 1px solid #111; 
-            text-align: center; 
+            margin-top: 200px; padding: 100px 0 50px; text-align: center; border-top: none; 
         }
-        .qr-section { display: flex; justify-content: center; gap: 80px; }
-        .qr-item { width: 130px; opacity: 0; }
-        .qr-item img { 
-            width: 100%; 
-            filter: grayscale(1); 
-            opacity: 0.4; 
-            transition: 0.6s;
-        }
-        .qr-item:hover img { opacity: 1; filter: grayscale(0); }
-
+        
         /* 移动端适配 */
         @media (max-width: 768px) {
-            .container { padding: 120px 30px; }
+            .scroll-content { padding: 100px 20px; }
             .main-title { font-size: 2rem; letter-spacing: 8px; }
-            .content-block { grid-template-columns: 1fr; gap: 40px; }
-            .evidence-grid { display: block; }
-            .evidence-item { margin-bottom: 60px !important; }
             .rm-header { padding: 30px; }
+            .content-section { margin-bottom: 10vh; }
         }
     </style>
 </head>
 <body>
 
+    <div id="bg-gallery">
+        <img src="bg-1.jpg" alt="BG 1" class="bg-img active">
+        <img src="bg-2.jpg" alt="BG 2" class="bg-img">
+        <img src="bg-3.jpg" alt="BG 3" class="bg-img">
+    </div>
+    
+    <div id="depth-mask"></div>
+
     <header class="rm-header">
         <a href="index.html" class="rm-logo">RIKYU LOU</a>
     </header>
 
-    <div class="container">
-        <a href="services.html" class="back-nav">Services / 业务列表</a>
-        
-        <h1 class="main-title">
-            考学咨询
-            <span>ACADEMIC CONSULTING / 01</span>
-        </h1>
+    <div class="scroll-content">
+        <div class="container-main">
+            <a href="services.html" class="back-nav">Services / 业务列表</a>
+            
+            <h1 class="main-title">
+                考学咨询
+                <span>ACADEMIC CONSULTING / 01</span>
+            </h1>
 
-        <div class="content-block">
-            <div class="content-desc">
-                <b>精密规划 / PRECISION PLANNING</b>
-                针对日本顶尖理工科院校的考学路径。提供从研究计划书逻辑重构到导师套磁的深度策略，助力每一个学术梦想的精准着陆。
+            <div class="content-section" data-trigger="bg1">
+                <div class="content-desc">
+                    <b>精密规划 / PRECISION PLANNING</b>
+                    针对日本顶尖理工科院校的考学路径。提供从研究计划书逻辑重构到导师套磁的深度策略，助力每一个学术梦想的精准着陆。依托 985 院校背景与在日科研经验，精准把握新型太阳能电池等前沿领域的学术脉络。协助您完成从零到一的学术跨越。
+                </div>
             </div>
-            <div class="content-desc">
-                <b>服务核心 / CORE EXPERTISE</b>
-                涵盖研究生、修士、博士的全链条咨询。结合 985 院校背景与在日科研实战，不仅是辅导，更是对未来学术潜力的二次开发。
+
+            <div class="content-section" data-trigger="bg2">
+                <div class="content-desc">
+                    <b>服务核心 / CORE EXPERTISE</b>
+                    涵盖研究生、修士、博士的全链条咨询。结合日本知名企业与学术界资源，精准定位技术缺口，为您提供最具竞争力的学术和职业路径规划。
+                </div>
             </div>
+            
+            <div class="content-section evidence-labels" data-trigger="bg3">
+                <div class="label-item">PRIMARY_DATA / 01</div>
+                <div class="label-item">SPEC_VERIFICATION / 02</div>
+                <div class="label-item">LOGIC_LOOP_TEST / 03</div>
+                <p style="font-size: 0.65rem; color: #555; text-align: right; margin-top: 10px;">现场实勘与多维度逻辑验证</p>
+            </div>
+
+            <footer class="rm-footer">
+                <p style="color: #111; font-size: 0.6rem; margin-top: 80px; letter-spacing: 2px;">© 2026 RIKYULOU STUDIO. ALL RIGHTS RESERVED.</p>
+            </footer>
         </div>
-
-        <section class="evidence-grid">
-            <div class="evidence-item large" data-label="PRIMARY_DATA / 01">
-                <div class="image-frame">
-                    <img src="wechat.jpg" alt="Evidence 1">
-                    <div class="corner-mark top-left"></div>
-                    <div class="corner-mark bottom-right"></div>
-                </div>
-                <p class="caption">核心数据采集与现场实勘图 / FIELD DATA COLLECTION</p>
-            </div>
-
-            <div class="evidence-item small" data-label="REF_INDEX / 02">
-                <div class="image-frame">
-                    <img src="ig.jpg" alt="Evidence 2">
-                </div>
-                <p class="caption">细节参数验证 / SPEC_VERIFICATION</p>
-            </div>
-
-            <div class="evidence-item medium" data-label="LOG_FILE / 03">
-                <div class="image-frame">
-                    <img src="wechat.jpg" alt="Evidence 3">
-                </div>
-                <p class="caption">多维度逻辑闭环测试 / LOGIC_LOOP_TEST</p>
-            </div>
-        </section>
-
-        <footer class="rm-footer">
-            <div class="qr-section">
-                <div class="qr-item">
-                    <img src="wechat.jpg" alt="WeChat">
-                    <div style="font-size: 0.6rem; color: #444; margin-top: 15px; letter-spacing: 2px;">WECHAT</div>
-                </div>
-                <div class="qr-item">
-                    <img src="ig.jpg" alt="Instagram">
-                    <div style="font-size: 0.6rem; color: #444; margin-top: 15px; letter-spacing: 2px;">INSTAGRAM</div>
-                </div>
-            </div>
-            <p style="color: #111; font-size: 0.6rem; margin-top: 80px; letter-spacing: 2px;">© 2026 RIKYULOU STUDIO. ALL RIGHTS RESERVED.</p>
-        </footer>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -233,51 +163,91 @@
         // 注册插件
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. 标题入场动画：字间距由宽变窄，模拟对焦
+        // 获取所有背景图片
+        const bgImgs = document.querySelectorAll('.bg-img');
+
+        // --- A. Immersive 入场动画 (GSAP) ---
         gsap.to(".main-title", {
             opacity: 1,
             letterSpacing: "15px",
             duration: 2.5,
             ease: "expo.out",
-            startAt: { letterSpacing: "40px" }
+            startAt: { letterSpacing: "40px", opacity: 0 }
         });
 
-        // 2. 文字板块随滚动浮现
-        gsap.to(".content-desc", {
-            scrollTrigger: {
-                trigger: ".content-block",
-                start: "top 85%",
-            },
-            opacity: 1,
-            y: -20,
-            duration: 1.5,
-            stagger: 0.4,
-            ease: "power3.out"
+        // --- B. 滚动触发背景切换逻辑 (ScrollTrigger) ---
+        
+        // 1. 初始化，确保第一张图显示
+        gsap.set(bgImgs[0], { opacity: 1 });
+
+        // 2. 遍历内容板块，创建 ScrollTrigger
+        const sections = document.querySelectorAll('.content-section');
+        
+        sections.forEach((section, index) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top 60%", // 当板块进入屏幕 60% 位置时
+                end: "bottom 40%", // 当板块离开屏幕 40% 位置时
+                // 性能调优：仅在进入和离开时触发 Crossfade
+                onEnter: () => crossfadeBg(index),
+                onEnterBack: () => crossfadeBg(index)
+            });
+            
+            // 内容板块本身的浮现动画
+            gsap.to(section, {
+                opacity: 1,
+                y: -10,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                }
+            });
         });
 
-        // 3. 图片网格的阻尼感浮现
-        gsap.to(".evidence-item", {
+        // 3. 背景平滑淡入淡出核心函数
+        function crossfadeBg(targetIndex) {
+            bgImgs.forEach((img, i) => {
+                if (i === targetIndex) {
+                    // 淡入目标图片
+                    gsap.to(img, { opacity: 1, duration: 1.5, ease: "power1.inOut" });
+                } else {
+                    // 淡出其他图片
+                    gsap.to(img, { opacity: 0, duration: 1.5, ease: "power1.inOut" });
+                }
+            });
+        }
+        
+        // 精密标注的延迟出现逻辑
+        gsap.to(".label-item", {
             scrollTrigger: {
-                trigger: ".evidence-grid",
+                trigger: ".evidence-labels",
                 start: "top 80%",
             },
-            opacity: 1,
-            y: -30,
-            duration: 1.2,
-            stagger: 0.3,
-            ease: "power2.out"
-        });
-
-        // 4. 二维码平滑出现
-        gsap.to(".qr-item", {
-            scrollTrigger: {
-                trigger: ".rm-footer",
-                start: "top 90%",
-            },
-            opacity: 1,
-            y: -10,
+            opacity: 0.6,
             duration: 1,
             stagger: 0.2
+        });
+
+        // --- C. 光标深度交互逻辑 (Mouse Interaction) ---
+        // 纯 JavaScript 优化性能
+        const bgImgsArray = Array.from(bgImgs);
+        const depthMask = document.getElementById('depth-mask');
+
+        document.addEventListener('mousemove', function(e) {
+            // 计算光标在视口中的百分比 (0: 顶部, 1: 底部)
+            const percentageY = e.clientY / window.innerHeight;
+            
+            // 1. 反向控制背景图亮度 (光标越低，图片越暗，体现深度)
+            // 亮度映射：0.4 (顶部) 到 0.1 (底部)
+            const brightnessValue = 0.4 - (percentageY * 0.3);
+            bgImgsArray.forEach(img => {
+                img.style.filter = `brightness(${brightnessValue})`;
+            });
+
+            // 2. 控制黑色遮罩透明度 (光标越低，页面越暗)
+            // 遮罩透明度映射：0 (顶部) 到 0.6 (底部)
+            const maskOpacity = percentageY * 0.6;
+            depthMask.style.background = `rgba(0, 0, 0, ${maskOpacity})`;
         });
     </script>
 </body>

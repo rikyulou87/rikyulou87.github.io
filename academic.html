@@ -61,6 +61,8 @@
             margin: 0 0 80px 0; 
             line-height: 1.1;
             text-transform: uppercase;
+            /* 初始状态为透明，由 GSAP 控制入场 */
+            opacity: 0; 
         }
         .main-title span { display: block; font-size: 1rem; color: #333; letter-spacing: 5px; margin-top: 20px; }
 
@@ -73,10 +75,10 @@
             padding-top: 60px;
             margin-bottom: 100px;
         }
-        .content-desc { color: #888; line-height: 2; font-weight: 300; font-size: 0.95rem; }
+        .content-desc { color: #888; line-height: 2; font-weight: 300; font-size: 0.95rem; opacity: 0; }
         .content-desc b { color: #fff; font-weight: 500; display: block; margin-bottom: 20px; letter-spacing: 2px; }
 
-        /* --- 4. 非对称图片网格 CSS --- */
+        /* --- 4. 非对称图片网格 --- */
         .evidence-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -86,10 +88,9 @@
 
         .evidence-item {
             position: relative;
-            opacity: 0.7;
-            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            opacity: 0; /* 初始隐藏 */
         }
-        .evidence-item:hover { opacity: 1; transform: translateY(-5px); }
+        .evidence-item:hover { transform: translateY(-5px); }
 
         .evidence-item::before {
             content: attr(data-label);
@@ -140,7 +141,7 @@
             text-align: center; 
         }
         .qr-section { display: flex; justify-content: center; gap: 80px; }
-        .qr-item { width: 130px; }
+        .qr-item { width: 130px; opacity: 0; }
         .qr-item img { 
             width: 100%; 
             filter: grayscale(1); 
@@ -156,6 +157,7 @@
             .content-block { grid-template-columns: 1fr; gap: 40px; }
             .evidence-grid { display: block; }
             .evidence-item { margin-bottom: 60px !important; }
+            .rm-header { padding: 30px; }
         }
     </style>
 </head>
@@ -224,5 +226,59 @@
         </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        // 注册插件
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. 标题入场动画：字间距由宽变窄，模拟对焦
+        gsap.to(".main-title", {
+            opacity: 1,
+            letterSpacing: "15px",
+            duration: 2.5,
+            ease: "expo.out",
+            startAt: { letterSpacing: "40px" }
+        });
+
+        // 2. 文字板块随滚动浮现
+        gsap.to(".content-desc", {
+            scrollTrigger: {
+                trigger: ".content-block",
+                start: "top 85%",
+            },
+            opacity: 1,
+            y: -20,
+            duration: 1.5,
+            stagger: 0.4,
+            ease: "power3.out"
+        });
+
+        // 3. 图片网格的阻尼感浮现
+        gsap.to(".evidence-item", {
+            scrollTrigger: {
+                trigger: ".evidence-grid",
+                start: "top 80%",
+            },
+            opacity: 1,
+            y: -30,
+            duration: 1.2,
+            stagger: 0.3,
+            ease: "power2.out"
+        });
+
+        // 4. 二维码平滑出现
+        gsap.to(".qr-item", {
+            scrollTrigger: {
+                trigger: ".rm-footer",
+                start: "top 90%",
+            },
+            opacity: 1,
+            y: -10,
+            duration: 1,
+            stagger: 0.2
+        });
+    </script>
 </body>
 </html>

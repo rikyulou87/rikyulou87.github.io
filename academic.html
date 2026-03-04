@@ -5,6 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACADEMIC | RIKYULOU</title>
     <style>
+        /* 图片展示区容器 */
+.evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* 12列网格，方便做非对称 */
+    gap: 30px;
+    margin-top: 100px;
+    padding-bottom: 100px;
+}
+
+/* 基础项样式 */
+.evidence-item {
+    position: relative;
+    opacity: 0.8;
+    transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.evidence-item:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+/* 像 RM 编号一样的技术标签 */
+.evidence-item::before {
+    content: attr(data-label);
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 0.6rem;
+    color: #333;
+    letter-spacing: 2px;
+    font-family: monospace;
+}
+
+/* 布局：大图占位 */
+.evidence-item.large { grid-column: 1 / 9; }
+
+/* 布局：小图占位（错位） */
+.evidence-item.small { grid-column: 9 / 13; margin-top: 50px; }
+
+/* 布局：中图占位（下沉） */
+.evidence-item.medium { grid-column: 4 / 10; margin-top: -30px; }
+
+/* 图片外框设计 */
+.image-frame {
+    position: relative;
+    border: 1px solid #111;
+    padding: 10px;
+    background: #050505;
+}
+
+.image-frame img {
+    width: 100%;
+    display: block;
+    filter: grayscale(1) contrast(1.1);
+    transition: 0.8s;
+}
+
+.image-frame:hover img {
+    filter: grayscale(0) contrast(1);
+}
+
+/* 技术角标 */
+.corner-mark {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #333;
+}
+.top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
+.bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+.caption {
+    font-size: 0.65rem;
+    color: #444;
+    margin-top: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
         /* 1. 全局极致黑基调 */
         body { 
             background: #000; 
@@ -148,3 +226,27 @@
 
 </body>
 </html>
+<section class="evidence-grid">
+    <div class="evidence-item large" data-label="PRIMARY_DATA / 01">
+        <div class="image-frame">
+            <img src="assets/evidence-1.jpg" alt="Evidence 1">
+            <div class="corner-mark top-left"></div>
+            <div class="corner-mark bottom-right"></div>
+        </div>
+        <p class="caption">核心数据采集与现场实勘图 / FIELD DATA COLLECTION</p>
+    </div>
+
+    <div class="evidence-item small" data-label="REF_INDEX / 02">
+        <div class="image-frame">
+            <img src="assets/evidence-2.jpg" alt="Evidence 2">
+        </div>
+        <p class="caption">细节参数验证 / SPEC_VERIFICATION</p>
+    </div>
+
+    <div class="evidence-item medium" data-label="LOG_FILE / 03">
+        <div class="image-frame">
+            <img src="assets/evidence-3.jpg" alt="Evidence 3">
+        </div>
+        <p class="caption">多维度逻辑闭环测试 / LOGIC_LOOP_TEST</p>
+    </div>
+</section>
